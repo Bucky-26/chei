@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JSON Data Editor</title>
+</head>
+<body>
+  <button onclick="addData()">Add Data</button>
+  <button onclick="replaceData()">Replace Data</button>
+
+  <script>
+    // Get the JSON data from the file
+    const json = fetch('appstate.json');
+      .then(response => response.json())
+      .catch(error => console.log(error));
+
+    // Add data to the JSON object
+   function addData(json, newData) {
+  // Fetch the JSON data from the file
+  const json = fetch(jsonFile)
+    .then(response => response.json())
+    .catch(error => console.log(error));
+
+  // Add the new data to the JSON object
+  json.push(newData);
+
+  // Save the updated JSON object to the file
+  fetch(jsonFile, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json)
+  })
+    .then(response => response.json())
+    .catch(error => console.log(error));
+}
+
+
+    // Replace data in the JSON object
+    function replaceData() {
+      // Get the index of the data to replace
+      const index = 0;
+
+      // Get the new data to replace with
+      const replacementData = {
+        name: 'Jane Doe',
+        age: 25,
+        occupation: 'Web Developer'
+      };
+
+      
+      json[index] = replacementData;
+
+      
+      fetch('appstate.json', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(json)
+      })
+        .then(response => response.json())
+        .catch(error => console.log(error));
+    }
+  </script>
+</body>
+</html>
